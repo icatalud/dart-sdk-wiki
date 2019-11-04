@@ -19,7 +19,9 @@ are GCC version 4.8 (4.6 is known not to work) and Microsoft Visual Studio 2015 
 
 ## Python 2 
 
-Dart SDK current requires Python 2 to build as our build scripts are not compatible with Python 3. 
+Dart SDK current requires Python 2 to build as our build scripts are not compatible with Python 3. The depot tools come with it's own Python 2 version and when installed correctly there shouldn't be any Python version conflicts. If the depot tools Python version is not getting retrieved, check if the depot tools path environment variable is leading over other Python paths (it should be the leading path).
+
+An alternative to not having depot tools Python lead over the previously installed Python is to use a virtual environment.
 
 If you default installation is Python 3 you could workaround this by using `virtualenv`: 
 
@@ -69,6 +71,13 @@ Install Chromium's depot tools following [this](http://commondatastorage.googlea
 
 <a name="source"/>
 
+## Visual Studio (required for Windows)
+
+Only VS 2017 and 2019 are compatible. Steps to get a free version of Visual Studio ready for building the SDK:
+- Download [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/) and install.
+- Open Visual Studio and in the menu go to Tools -> Get Tools and Features. Select "Desktop Development with C++" in the Workloads tab (default tab) and install.
+- Go to Windows Apps & Features (where you uninstall programs), search for "Windows Software Development Kit" and click modify. Select "Change", continue, select "Debugger" in the checkbox list and proceed.
+
 # Getting the source
 
 You can choose whatever name you want for the directory to check dart out in, here it is called `dart-sdk`.
@@ -87,7 +96,7 @@ Build the 64-bit SDK:
 
 ```bash
 cd dart-sdk/sdk
-./tools/build.py --mode release --arch x64 create_sdk
+python ./tools/build.py --mode release --arch x64 create_sdk
 ```
 
 The output will be in `out/ReleaseX64/dart_sdk` on Linux and Windows, and `xcodebuild/ReleaseX64/dart_sdk` on MacOS.
@@ -96,7 +105,7 @@ Build the 32-bit SDK:
 
 ```bash
 cd dart-sdk/sdk
-./tools/build.py --mode release --arch ia32 create_sdk
+python ./tools/build.py --mode release --arch ia32 create_sdk
 ```
 The output will be in `out/ReleaseIA32/dart_sdk` on Linux and Windows, or `xcodebuild/ReleaseIA32/dart_sdk` on MacOS.
 
